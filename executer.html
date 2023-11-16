@@ -10,8 +10,7 @@
     </canvas>
 
 
-    <script src="./Adversary.js"></script>
-    <script src="./Histogram.js"></script>
+    <script src="./Arith_Brownian.js"></script>
     <script src="./LineChart.js"></script>
 
     <script>
@@ -20,20 +19,29 @@
             this.isDragging = false;
             this.graphBitmap = null;
 
+            // Example usage
+            const numSteps = 100;  // Number of steps
+            const stepSize = 0.1;  // Step size
+
+            const path = generateArithmeticBrownianMotion(numSteps, stepSize);
+            const binaryArray = generateBinaryArray(path);
+
+
             // Genera gli attacchi
-            var adv = new Adversary(1000, 100, 0.5);
-            adv.generateAttacks();
+            // var adv = new Adversary(1000, 100, 0.5);
+            // adv.generateAttacks();
 
-            // Recupera i dati
-            var data1 = adv.getLineChart1AttackList();
+            // // Recupera i dati
+            // var data1 = adv.getLineChart1AttackList();
 
+            console.log(binaryArray)
 
             var chart1 = new LineChart(document.getElementById('pictureBox1'));
-            chart1.drawChart(data1);
+            chart1.drawChart(binaryArray);
 
 
-            var k = 20;
-            var histogramDistChart1 = adv.createHistoDistrib(data1, k);
+            // var k = 20;
+            // var histogramDistChart1 = adv.createHistoDistrib(data1, k);
 
 
             //var histogram1 = new Histogram(chart1, histogramDistChart1, k, "");
