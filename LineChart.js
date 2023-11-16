@@ -95,8 +95,8 @@ drawChart(data) {
 drawChartCont(data) {
     let g = this._graphBitmap.getContext("2d");
 
-    let width = 1000 - 2 * this.PADDING;
-    let height = 1000 - 2 * this.PADDING;
+    let width = 1850 - 2 * this.PADDING;
+    let height = 1020 - 2 * this.PADDING;
 
 
     this.xMin = 0;
