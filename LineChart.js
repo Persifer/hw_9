@@ -59,18 +59,17 @@ drawChart(data) {
         g.stroke();
         g.fillText(i.toString(), this.PADDING - 30, y - 10);
     }
- 
 
     let colors = ["blue", "green", "red", "orange", "purple", "brown", "magenta", "cyan"];
     for (let i = 0; i < data.length; i++) {
-        let dataList = data;
-        //if (dataList.length < 2) continue;
+        let dataList = data[i];
+        if (dataList.length < 2) continue;
         
 
         let x1 = this.PADDING;
-        let y1 = this.PADDING + height / 2 - dataList.length * height / (this.yMax - this.yMin);
+        let y1 = this.PADDING + height / 2 - dataList[0] * height / (this.yMax - this.yMin);
         let x2 = this.PADDING + (1 - this.xMin) * width / (this.xMax - this.xMin);
-		let y2 = this.PADDING + height / 2 - dataList.length * height / (this.yMax - this.yMin);
+		let y2 = this.PADDING + height / 2 - dataList[0] * height / (this.yMax - this.yMin);
 		
 		g.strokeStyle = colors[i % colors.length];
 		g.beginPath();
