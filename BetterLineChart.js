@@ -17,8 +17,10 @@
 
         ctx.beginPath();
         function getRandomNumber() {
-            return Math.floor(Math.random() * 8) + 1;
+            return Math.floor(Math.random() * 7) + 1;
         }
+
+
         let colors = ["blue", "green", "red", "orange", "purple", "brown", "magenta", "cyan"];
         ctx.strokeStyle = colors[getRandomNumber()];
         ctx.lineWidth = 2;
