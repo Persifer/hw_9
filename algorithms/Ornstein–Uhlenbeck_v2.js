@@ -1,7 +1,7 @@
-function generateOrnsteinUhlenbeck(numSteps, stepSize, probability, theta, mu, sigma) {
+function generateOrnsteinUhlenbeck(numSteps, stepSize, theta, mu, sigma, initialX) {
     // Initialize variables
-    let result = []
-    currentX = 0.4
+    let path = [initialX];  // Initial value
+    let currentX = initialX;
 
     // Generate the path
     for (let i = 1; i < numSteps; i++) {
@@ -13,21 +13,13 @@ function generateOrnsteinUhlenbeck(numSteps, stepSize, probability, theta, mu, s
         const diffusion = sigma * Math.sqrt(stepSize) * randomValue;
 
         // Update the current value using the Ornstein-Uhlenbeck process formula
-        currentProb = sigmoid(currentX + drift + diffusion);
+        currentX = currentX + drift + diffusion;
 
         // Add the current value to the path
-        if(currentProb > probability){
-            result.push(1)
-        }else{
-            result.push(-1)
-        }
+        path.push(currentX);
     }
 
-    return result;
-}
-
-function sigmoid(x) {
-    return 1 / (1 + Math.exp(-x));
+    return path;
 }
 
 // Function to generate a random value from a normal distribution
@@ -38,5 +30,5 @@ function randn_bm() {
     return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
 }
 
-// Example usage
+
 
