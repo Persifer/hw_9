@@ -1,6 +1,6 @@
 
     // Function to create a simple Line Chart
-    function createLineChart(ctx, data, title) {
+    function createLineChart(ctx, data) {
         const canvasWidth = ctx.canvas.width;
         const canvasHeight = ctx.canvas.height;
 
@@ -16,7 +16,11 @@
         const xIncrement = (canvasWidth - 80) / (numPoints - 1);
 
         ctx.beginPath();
-        ctx.strokeStyle = 'rgba(75, 192, 192, 1)';
+        function getRandomNumber() {
+            return Math.floor(Math.random() * 8) + 1;
+        }
+        let colors = ["blue", "green", "red", "orange", "purple", "brown", "magenta", "cyan"];
+        ctx.strokeStyle = colors[getRandomNumber()];
         ctx.lineWidth = 2;
         ctx.moveTo(50, canvasHeight - 30 - data[0] * 100);
 
@@ -26,13 +30,14 @@
             ctx.lineTo(x, y);
             ctx.arc(x, y, 3, 0, 2 * Math.PI);
         }
+        
 
         ctx.stroke();
 
         // Display the title
-        ctx.font = '14px Arial';
-        ctx.fillStyle = 'black';
-        ctx.fillText(title, canvasWidth / 2 - title.length * 3, 20);
+        //ctx.font = '14px Arial';
+        //ctx.fillStyle = 'black';
+        //ctx.fillText(title, canvasWidth / 2 - title.length * 3, 20);
     }
 
 

@@ -9,7 +9,7 @@
         display: flex;
         flex-wrap: wrap;
       }
-      h1{
+      h1 {
         text-align: center;
       }
       canvas {
@@ -18,24 +18,23 @@
         margin: 0 auto;
       }
 
-      label{
+      label {
         width: 50px;
         height: 20px;
-       margin: 0 auto;
+        margin: 0 auto;
       }
-      input{
+      input {
         margin: 0 auto;
         height: 20px;
       }
-      select{
+      select {
         margin: 40px auto;
         width: 200px;
         height: 50px;
         font-size: 15px;
         text-align: center;
-
       }
-      #pictureBox1{
+      #pictureBox1 {
         margin: 0 auto;
         padding-left: 50px;
       }
@@ -43,16 +42,17 @@
   </head>
   <body>
     <header>
-        <h1>HOMEWORK 9</h1>
+      <h1>HOMEWORK 9</h1>
     </header>
-    <label>numSteps <input type="text" /></label>
-    <label>stepsize <input type="text" /></label>
+    <label>numSteps <input id="numsteps" type="text" /></label>
+    <label>stepSize <input id="stepsize" type="text" /></label>
     <label>1 <input type="text" /></label>
     <label>2<input type="text" /></label>
-    <button>avvia simulazione</button>
+
+    <button onclick="avvia()">avvia simulazione</button>
 
     <div>
-      <select id="algorithmSelector" onchange="updateGraph()">
+      <select id="algorithmSelector" onchange="GraphHandler()">
         <option value="OrnsteinUhlenbeck">Ornstein Uhlenbeck</option>
         <option value="GeometricBrownian">Geometric Brownian</option>
         <option value="ArithBrownian">Arith Brownian</option>
@@ -62,46 +62,76 @@
     </div>
     <canvas id="pictureBox1" width="1000" height="500"> </canvas>
 
-    <script src="./algorithms/Ornstein–Uhlenbeck_v2.js"></script>
+    <script src="./algorithms/Arith_Brownian.js"></script>
+    <script src="./algorithms/Black–Karasinski.js"></script>
+    <script src="./algorithms/Chen_model.js"></script>
+    <script src=".algorithms/Cox–Ingersoll–Ross.js"></script>
     <script src="./algorithms/Geometric_Brownian.js"></script>
+    <script src="./algorithms/Heston.js"></script>
+    <script src="./algorithms/Hull–White.js"></script>
+    <script src="./algorithms/Ornstein–Uhlenbeck_v2.js"></script>
+    <script src="./algorithms/Vasicek.js"></script>
+
     <script src="./BetterLineChart.js"></script>
 
     <script>
       function GraphHandler() {
         this.isDragging = false;
         this.graphBitmap = null;
+        /*   // Example usage
+              const numSteps = 100; // Number of steps
+              const stepSize = 0.1; // Step size
+              const theta = 0.1; // Mean-reversion speed
+              const mu = 0.5; // Long-term mean
+              const sigma = 0.2; // Volatility
+              const initialX = 0.4; // Initial value          
+*/
 
         const canvas = document.getElementById("pictureBox1");
-        const context = canvas.getContext("2d");
+        let context = canvas.getContext("2d");
+        let selection = document.getElementById("algorithmSelector").value;
+        let path =null;
+        
+        if (selection == "OrnsteinUhlenbeck") {
+            
+            for(let i=0; i<4;i++){
+          path = generateOrnsteinUhlenbeck(100, 0.8, 0.57, 0.9, 0.6, 0.9);
+          createLineChart(context, path);}
+          context=null
+        } else if (selection == "GeometricBrownian") {
+            
+          for(let i=0; i<4;i++){
+          path = generateGeometricBrownianMotion(100, 0.1, 0.1, 0.5, 0.2, 0.4);
+          createLineChart(context, path);}
+          context=null
+        } else if (selection === "vasicek") {
+          chartData = generateVasicekPath(100, 252);
+        }
 
-        // Example usage
-        const numSteps = 100; // Number of steps
-        const stepSize = 0.1; // Step size
-        const theta = 0.1; // Mean-reversion speed
-        const mu = 0.5; // Long-term mean
-        const sigma = 0.2; // Volatility
-        const initialX = 0.4; // Initial value
+        // const numSteps = 100;         // Number of steps
+        // const stepSize = 0.1;         // Step size
+        // const initialRate = 0.03;     // Initial short rate
+        // const kappa = 0.1;            // Mean reversion speed
+        // const theta = 0.05;           // Long-term mean
+        // const sigma = 0.02;           // Volatility
 
-        const path = generateGeometricBrownianMotion(
-          numSteps,
-          stepSize,
-          theta,
-          mu,
-          sigma,
-          initialX
-        );
-
-        createLineChart(context, path, "Example Line Chart");
+        // const path = generateVasicekPath(numSteps, stepSize, initialRate, kappa, theta, sigma);
       }
+
       function updateGraph() {
-        var selectedAlgorithm =
-          document.getElementById("algorithmSelector").value;
         var chartData;
 
         if (selectedAlgorithm === "OrnsteinUhlenbeck") {
           chartData = generateOrnsteinUhlenbeck(100, 0.8, 0.57, 0.9, 0.6, 0.9);
         } else if (selectedAlgorithm === "GeometricBrownian") {
-          chartData = generateGeometricBrownianMotion(100, 0.8, 0.5, 0.2, 5);
+          chartData = generateGeometricBrownianMotion(
+            100,
+            0.1,
+            0.1,
+            0.5,
+            0.2,
+            0.4
+          );
         } else if (selectedAlgorithm === "ArithBrownian") {
           chartData = generateArithmeticBrownianMotion(500, 0.5);
         } else if (selectedAlgorithm === "vasicek") {
