@@ -17,11 +17,32 @@
 
         ctx.beginPath();
         function getRandomNumber() {
-            return Math.floor(Math.random() * 7) + 1;
+            return Math.floor(Math.random() * 20) + 1;
         }
 
 
-        let colors = ["blue", "green", "red", "orange", "purple", "brown", "magenta", "cyan"];
+        let colors = [
+            "red",
+            "green",
+            "blue",
+            "yellow",
+            "cyan",
+            "magenta",
+            "orange",
+            "purple",
+            "lime",
+            "coral",
+            "steelblue",
+            "indianred",
+            "mediumseagreen",
+            "darkorange",
+            "mediumpurple",
+            "mediumspringgreen",
+            "lightcoral",
+            "mediumseagreen",
+            "royalblue",
+            "darkkhaki"
+        ];
         ctx.strokeStyle = colors[getRandomNumber()];
         ctx.lineWidth = 2;
         ctx.moveTo(50, canvasHeight - 30 - data[0] * 100);
