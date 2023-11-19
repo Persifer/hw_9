@@ -18,7 +18,7 @@
 
     <script src="./algorithms/Ornstein–Uhlenbeck_v2.js"></script>
     <script src="./algorithms/Geometric_Brownian.js"></script>
-    <script src="./algorithms/Heston.js"></script>
+    <script src="./algorithms/Hull–White.js"></script>
     <script src="./BetterLineChart.js"></script>
 
     <script>
@@ -35,14 +35,13 @@
             const stepSize = 0.01;         // Step size
             const initialPrice = 100.0;    // Initial stock price
             const initialVolatility = 0.2; // Initial volatility
-            const kappa = 1.0;             // Mean reversion speed for volatility
-            const theta = 0.2;             // Long-term mean for volatility
-            const xi = 0.3;                // Volatility of volatility
-            const rho = -0.5;              // Correlation between stock price and volatility
+            const meanReversion = 1.0;             // Mean reversion speed for volatility
+            const volatility = 0.2;             // Long-term mean for volatility
+            const initialRate = 0.3;                // Volatility of volatility
+            const sigma = -0.5;              // Correlation between stock price and volatility
 
-            const { pricePath, volatilityPath } = generateHestonPath(numSteps, stepSize, initialPrice, initialVolatility, kappa, theta, xi, rho);
-
-            createLineChart(context, volatilityPath, 'Example Line Chart');
+            const path = generateHullWhitePath(numSteps, stepSize, meanReversion, volatility, initialRate);
+            createLineChart(context, path, 'Example Line Chart');
         }
 
         // Simulate Form1_Load event
