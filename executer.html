@@ -18,6 +18,7 @@
 
     <script src="./algorithms/Ornstein–Uhlenbeck_v2.js"></script>
     <script src="./algorithms/Geometric_Brownian.js"></script>
+    <script src="./algorithms/Heston.js"></script>
     <script src="./BetterLineChart.js"></script>
 
     <script>
@@ -30,16 +31,18 @@
             const context = canvas.getContext('2d');
 
             // Example usage
-            const numSteps = 100;         // Number of steps
-            const stepSize = 0.1;         // Step size
-            const theta = 0.1;            // Mean-reversion speed
-            const mu = 0.5;               // Long-term mean
-            const sigma = 0.2;            // Volatility
-            const initialX = 0.4;         // Initial value
+            const numSteps = 100;          // Number of steps
+            const stepSize = 0.01;         // Step size
+            const initialPrice = 100.0;    // Initial stock price
+            const initialVolatility = 0.2; // Initial volatility
+            const kappa = 1.0;             // Mean reversion speed for volatility
+            const theta = 0.2;             // Long-term mean for volatility
+            const xi = 0.3;                // Volatility of volatility
+            const rho = -0.5;              // Correlation between stock price and volatility
 
-            const path = generateGeometricBrownianMotion(numSteps, stepSize, theta, mu, sigma, initialX);
+            const { pricePath, volatilityPath } = generateHestonPath(numSteps, stepSize, initialPrice, initialVolatility, kappa, theta, xi, rho);
 
-            createLineChart(context, path, 'Example Line Chart');
+            createLineChart(context, volatilityPath, 'Example Line Chart');
         }
 
         // Simulate Form1_Load event
