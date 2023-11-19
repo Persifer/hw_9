@@ -1,51 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Graph Handler</title>
-</head>
-<body>
-    <select name="" id="">
-        <option value="">aritmetic Brownian</option>
-        <option value=""></option>
-        <option value=""></option>
-        <option value=""></option>
-    </select>
-    <canvas id="pictureBox1" width="1000" height="500">
-    </canvas>
+    <style>
+      div {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      h1{
+        text-align: center;
+      }
+      canvas {
+        width: 1050px;
+        height: auto;
+        margin: 0 auto;
+      }
 
+      label{
+        width: 50px;
+        height: 20px;
+       margin: 0 auto;
+      }
+      input{
+        margin: 0 auto;
+        height: 20px;
+      }
+      select{
+        margin: 40px auto;
+        width: 200px;
+        height: 50px;
+        font-size: 15px;
+        text-align: center;
+
+      }
+      #pictureBox1{
+        margin: 0 auto;
+        padding-left: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+        <h1>HOMEWORK 9</h1>
+    </header>
+    <label>numSteps <input type="text" /></label>
+    <label>stepsize <input type="text" /></label>
+    <label>1 <input type="text" /></label>
+    <label>2<input type="text" /></label>
+    <button>avvia simulazione</button>
+
+    <div>
+      <select id="algorithmSelector" onchange="updateGraph()">
+        <option value="OrnsteinUhlenbeck">Ornstein Uhlenbeck</option>
+        <option value="GeometricBrownian">Geometric Brownian</option>
+        <option value="ArithBrownian">Arith Brownian</option>
+        <option value="vasicek">vasicek</option>
+        <option value="cir">cir</option>
+      </select>
+    </div>
+    <canvas id="pictureBox1" width="1000" height="500"> </canvas>
 
     <script src="./algorithms/Ornstein–Uhlenbeck_v2.js"></script>
     <script src="./algorithms/Geometric_Brownian.js"></script>
     <script src="./BetterLineChart.js"></script>
 
     <script>
-        function GraphHandler() {
-            
-            this.isDragging = false;
-            this.graphBitmap = null;
+      function GraphHandler() {
+        this.isDragging = false;
+        this.graphBitmap = null;
 
-            const canvas = document.getElementById('pictureBox1');
-            const context = canvas.getContext('2d');
+        const canvas = document.getElementById("pictureBox1");
+        const context = canvas.getContext("2d");
 
-            // Example usage
-            const numSteps = 100;         // Number of steps
-            const stepSize = 0.1;         // Step size
-            const theta = 0.1;            // Mean-reversion speed
-            const mu = 0.5;               // Long-term mean
-            const sigma = 0.2;            // Volatility
-            const initialX = 0.4;         // Initial value
+        // Example usage
+        const numSteps = 100; // Number of steps
+        const stepSize = 0.1; // Step size
+        const theta = 0.1; // Mean-reversion speed
+        const mu = 0.5; // Long-term mean
+        const sigma = 0.2; // Volatility
+        const initialX = 0.4; // Initial value
 
-            const path = generateGeometricBrownianMotion(numSteps, stepSize, theta, mu, sigma, initialX);
+        const path = generateGeometricBrownianMotion(
+          numSteps,
+          stepSize,
+          theta,
+          mu,
+          sigma,
+          initialX
+        );
 
-            createLineChart(context, path, 'Example Line Chart');
+        createLineChart(context, path, "Example Line Chart");
+      }
+      function updateGraph() {
+        var selectedAlgorithm =
+          document.getElementById("algorithmSelector").value;
+        var chartData;
+
+        if (selectedAlgorithm === "OrnsteinUhlenbeck") {
+          chartData = generateOrnsteinUhlenbeck(100, 0.8, 0.57, 0.9, 0.6, 0.9);
+        } else if (selectedAlgorithm === "GeometricBrownian") {
+          chartData = generateGeometricBrownianMotion(100, 0.8, 0.5, 0.2, 5);
+        } else if (selectedAlgorithm === "ArithBrownian") {
+          chartData = generateArithmeticBrownianMotion(500, 0.5);
+        } else if (selectedAlgorithm === "vasicek") {
+          chartData = generateVasicekPath(100, 252);
+        } else if (selectedAlgorithm === "cir") {
+          chartData = generateCIRBinaryArray(252, 1 / 252, cirParams);
         }
 
-        // Simulate Form1_Load event
-        window.onload = function() {
-            GraphHandler();
-        };
+        var chart1 = new LineChart(document.getElementById("pictureBox1"));
+        chart1.drawChart([chartData]);
+      }
+
+      // Simulate Form1_Load event
+      window.onload = function () {
+        GraphHandler();
+      };
     </script>
-</body>
+  </body>
 </html>
