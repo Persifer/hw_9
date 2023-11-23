@@ -1,8 +1,10 @@
 
     // Function to create a simple Line Chart
     function createLineChart(ctx, data) {
-        const canvasWidth = ctx.canvas.width;
-        const canvasHeight = ctx.canvas.height;
+        let canvasWidth = ctx.canvas.width;
+        let canvasHeight = 700;
+         
+        
 
         // Draw the axes
         ctx.beginPath();
@@ -13,7 +15,7 @@
 
         // Draw the data points and connect with lines
         const numPoints = data.length;
-        const xIncrement = (canvasWidth - 80) / (numPoints - 1);
+        let xIncrement = (canvasWidth - 10) / (numPoints - 1);
 
         ctx.beginPath();
         function getRandomNumber() {
@@ -21,28 +23,15 @@
         }
 
 
-        let colors = [
-            "red",
-            "green",
-            "blue",
-            "yellow",
-            "cyan",
-            "magenta",
-            "orange",
-            "purple",
-            "lime",
-            "coral",
-            "steelblue",
-            "indianred",
-            "mediumseagreen",
-            "darkorange",
-            "mediumpurple",
-            "mediumspringgreen",
-            "lightcoral",
-            "mediumseagreen",
-            "royalblue",
-            "darkkhaki"
-        ];
+        const colors =[
+            '#FF5733', '#33FF57', '#5733FF', '#FF33A8', '#A833FF',
+            '#33C5FF', '#FFD333', '#FF3333', '#33FFD9', '#B233FF',
+            '#FF854D', '#4DFF85', '#854DFF', '#FF4D85', '#FFB84D',
+            '#B84DFF', '#4DB8FF', '#FF9E4D', '#4DFF9E', '#9E4DFF',
+            '#FF6633', '#33FF66', '#6633FF', '#FF3366', '#FFCC33',
+            '#CC33FF', '#33CCFF', '#FF9933', '#33FF99', '#9933FF'
+          ];
+          
         ctx.strokeStyle = colors[getRandomNumber()];
         ctx.lineWidth = 2;
         ctx.moveTo(50, canvasHeight - 30 - data[0] * 100);

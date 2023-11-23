@@ -44,28 +44,29 @@
     <header>
       <h1>HOMEWORK 9</h1>
     </header>
-    <label>numSteps <input id="numsteps" type="text" /></label>
-    <label>stepSize <input id="stepsize" type="text" /></label>
-    <label>1 <input type="text" /></label>
-    <label>2<input type="text" /></label>
-
-    <button onclick="avvia()">avvia simulazione</button>
+   
 
     <div>
       <select id="algorithmSelector" onchange="GraphHandler()">
-        <option value="OrnsteinUhlenbeck">Ornstein Uhlenbeck</option>
-        <option value="GeometricBrownian">Geometric Brownian</option>
         <option value="ArithBrownian">Arith Brownian</option>
+        <option value="BlackKarasinski">BlackKarasinski</option>
+        <option value="ChenModel">ChenModel</option>
+        <option value="Cox–Ingersoll–Ross">Cox–Ingersoll–Ross</option>
+        <option value="GeometricBrownian">Geometric Brownian</option>
+        <option value="Heston">Heston</option>
+        <option value="Hullwhite">Hull white</option>
+        <option value="OrnsteinUhlenbeck">OrnsteinUhlenbeck</option>
         <option value="vasicek">vasicek</option>
-        <option value="cir">cir</option>
+        
+ 
       </select>
     </div>
-    <canvas id="pictureBox1" width="1000" height="500"> </canvas>
+    <canvas id="pictureBox1" width="1500" height="1500"> </canvas>
 
     <script src="./algorithms/Arith_Brownian.js"></script>
     <script src="./algorithms/Black–Karasinski.js"></script>
     <script src="./algorithms/Chen_model.js"></script>
-    <script src=".algorithms/Cox–Ingersoll–Ross.js"></script>
+    <script src="./algorithms/Cox–Ingersoll–Ross.js"></script>
     <script src="./algorithms/Geometric_Brownian.js"></script>
     <script src="./algorithms/Heston.js"></script>
     <script src="./algorithms/Hull–White.js"></script>
@@ -78,51 +79,71 @@
       function GraphHandler() {
         this.isDragging = false;
         this.graphBitmap = null;
-        /*   // Example usage
-              const numSteps = 100; // Number of steps
-              const stepSize = 0.1; // Step size
-              const theta = 0.1; // Mean-reversion speed
-              const mu = 0.5; // Long-term mean
-              const sigma = 0.2; // Volatility
-              const initialX = 0.4; // Initial value          
-*/
 
         const canvas = document.getElementById("pictureBox1");
         let context = canvas.getContext("2d");
         let selection = document.getElementById("algorithmSelector").value;
-        let path =null;
-        
-        if (selection == "OrnsteinUhlenbeck") {
+        if (selection == "ArithBrownian") {
             context.reset()
-            for(let i=0; i<4;i++){
-          path = generateOrnsteinUhlenbeck(100, 0.8, 0.57, 0.9, 0.6, 0.9);
-          createLineChart(context, path);}
-          
-        } else if (selection == "GeometricBrownian") {
-            context.reset()
-          for(let i=0; i<5;i++){
-          path = generateGeometricBrownianMotion(100, 0.1, 0.1, 0.5, 0.2, 0.4);
-          createLineChart(context, path);}
-
-        } else if (selection == "ArithBrownian") {
-            context.reset()
-          for(let i=0; i<5;i++){
+          for(let i=0; i<30;i++){
           path =  generateArithmeticBrownianMotion(100, 0.1, 1, 0.1, 0.2);
           createLineChart(context, path);}
 
-        }else if (selection == "GeometricBrownian") {
+        }else if (selection == "BlackKarasinski") {
             context.reset()
-          for(let i=0; i<5;i++){
-          path = generateGeometricBrownianMotion(100, 0.1, 0.1, 0.5, 0.2, 0.4);
+          for(let i=0; i<30;i++){
+          path =  generateBlackKarasinskiPath(100, 0.1, 0.7, 0.5, 0.2, 0.4);
           createLineChart(context, path);}
 
-        }else if (selection == "GeometricBrownian") {
+        }else if (selection == "ChenModel") {
             context.reset()
-          for(let i=0; i<5;i++){
-          path = generateGeometricBrownianMotion(100, 0.1, 0.1, 0.5, 0.2, 0.4);
+          for(let i=0; i<30;i++){
+          path = generateChenModelBinaryPath(100, 0.01, 1, 1.0,0.2,0.3);
           createLineChart(context, path);}
 
         }
+        else if (selection == "Cox–Ingersoll–Ross") {
+            context.reset()
+          for(let i=0; i<30;i++){
+          path = generateCIRPath(100, 0.1, 0.3, 2, 0.1, 0.2);
+          createLineChart(context, path);}
+
+        }
+        else if (selection == "GeometricBrownian") {
+            context.reset()
+          for(let i=0; i<30;i++){
+          path = generateGeometricBrownianMotion(100, 0.1, 0.1, 0.5, 0.4);
+          createLineChart(context, path);}
+
+        } 
+        else if (selection == "Heston") {
+            context.reset()
+          for(let i=0; i<30;i++){
+          path = generateHestonPath(100, 0.1, 0.1, 0.5, 0.2, 0.4);
+          createLineChart(context, path);}
+
+        } 
+        else if (selection == "Hullwhite") {
+            context.reset()
+          for(let i=0; i<30;i++){
+          path = generateHullWhitePath(100, 0.1, 0.1, 0.5, 0.2, 0.4);
+          createLineChart(context, path);}
+
+        } 
+        else if (selection == "OrnsteinUhlenbeck") {
+            context.reset()
+            for(let i=0; i<30;i++){
+          path = generateOrnsteinUhlenbeck(100, 0.8, 0.57, 0.9, 0.6, 0.9);
+          createLineChart(context, path);}
+          
+        } 
+        else if (selection == "vasicek") {
+            context.reset()
+            for(let i=0; i<30;i++){
+          path = generateVasicekPath(100, 0.2, 0.57, 0.9, 0.1, 0.9);
+          createLineChart(context, path);}
+          
+        } 
 
         // const numSteps = 100;         // Number of steps
         // const stepSize = 0.1;         // Step size
