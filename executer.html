@@ -44,6 +44,12 @@
     <header>
       <h1>HOMEWORK 9</h1>
     </header>
+    <div>
+      <p>inserisci i valori</p>
+      <label for=""><input id="var1" type="text">uno</label>
+      <label for=""><input id="var2" type="text" >due</label>
+      <button onclick="GraphHandler()">attivaaaaaaaa</button>
+    </div>
    
 
     <div>
@@ -76,9 +82,14 @@
     <script src="./BetterLineChart.js"></script>
 
     <script>
+
+      let var1 = document.getElementById("var1");
+      let var2= document.getElementById("var2");
+
       function GraphHandler() {
         this.isDragging = false;
         this.graphBitmap = null;
+        console.log(var1.value + "   "+ var2.value)
 
         const canvas = document.getElementById("pictureBox1");
         let context = canvas.getContext("2d");
@@ -86,61 +97,61 @@
         if (selection == "ArithBrownian") {
             context.reset()
           for(let i=0; i<30;i++){
-          path =  generateArithmeticBrownianMotion(100, 0.1, 1, 0.1, 0.2);
+          path =  generateArithmeticBrownianMotion(var1.value, var2.value, 1, 0.1, 0.2);
           createLineChart(context, path);}
 
         }else if (selection == "BlackKarasinski") {
             context.reset()
           for(let i=0; i<30;i++){
-          path =  generateBlackKarasinskiPath(100, 0.1, 0.7, 0.5, 0.2, 0.4);
+          path =  generateBlackKarasinskiPath(var1.value, var2.value, 0.7, 0.5, 0.2, 0.4);
           createLineChart(context, path);}
 
         }else if (selection == "ChenModel") {
             context.reset()
           for(let i=0; i<30;i++){
-          path = generateChenModelPath(100, 0.01, 1, 1.0,0.55,3, 0.3);
+          path = generateChenModelPath(var1.value, var2.value, 1, 1.0,0.55,3, 0.3);
           createLineChart(context, path);}
 
         }
         else if (selection == "Cox–Ingersoll–Ross") {
             context.reset()
           for(let i=0; i<30;i++){
-          path = generateCIRPath(100, 0.1, 0.3, 2, 0.1, 0.2);
+          path = generateCIRPath(var1.value, var2.value, 0.3, 2, 0.1, 0.2);
           createLineChart(context, path);}
 
         }
         else if (selection == "GeometricBrownian") {
             context.reset()
           for(let i=0; i<30;i++){
-          path = generateGeometricBrownianMotion(100, 0.1, 0.1, 0.5, 0.4);
+          path = generateGeometricBrownianMotion(var1.value, var2.value, 0.1, 0.5, 0.4);
           createLineChart(context, path);}
 
         } 
         else if (selection == "Heston") {
             context.reset()
           for(let i=0; i<30;i++){
-          path = generateHestonVolatilityPath(100, 0.1, 2, 10, 2, 0.3,5);
+          path = generateHestonVolatilityPath(var1.value, var2.value, 2, 10, 2, 0.3,5);
           createLineChart(context, path);}
 
         } 
         else if (selection == "Hullwhite") {
             context.reset()
           for(let i=0; i<30;i++){
-          path = generateHullWhitePath(100, 0.1, 0.1, 0.5, 0.2, 0.4);
+          path = generateHullWhitePath(var1.value, var2.value, 0.1, 0.5, 0.2, 0.4);
           createLineChart(context, path);}
 
         } 
         else if (selection == "OrnsteinUhlenbeck") {
             context.reset()
             for(let i=0; i<30;i++){
-          path = generateOrnsteinUhlenbeck(100, 0.8, 0.57, 0.9, 0.6, 0.9);
+          path = generateOrnsteinUhlenbeck(var1.value, var2.value, 0.57, 0.9, 0.6, 0.9);
           createLineChart(context, path);}
           
         } 
         else if (selection == "vasicek") {
             context.reset()
             for(let i=0; i<30;i++){
-          path = generateVasicekPath(100, 0.2, 0.57, 0.9, 0.1, 0.9);
+          path = generateVasicekPath(var1.value, var2.value, 0.57, 0.9, 0.1, 0.9);
           createLineChart(context, path);}
           
         } 
@@ -155,31 +166,7 @@
         // const path = generateVasicekPath(numSteps, stepSize, initialRate, kappa, theta, sigma);
       }
 
-      function updateGraph() {
-        var chartData;
-
-        if (selectedAlgorithm === "OrnsteinUhlenbeck") {
-          chartData = generateOrnsteinUhlenbeck(100, 0.8, 0.57, 0.9, 0.6, 0.9);
-        } else if (selectedAlgorithm === "GeometricBrownian") {
-          chartData = generateGeometricBrownianMotion(
-            100,
-            0.1,
-            0.1,
-            0.5,
-            0.2,
-            0.4
-          );
-        } else if (selectedAlgorithm === "ArithBrownian") {
-          chartData = generateArithmeticBrownianMotion(100, 0.8, 0.57, 0.9, 0.6, 0.9);
-        } else if (selectedAlgorithm === "vasicek") {
-          chartData = generateVasicekPath(100, 252);
-        } else if (selectedAlgorithm === "cir") {
-          chartData = generateCIRBinaryArray(252, 1 / 252, cirParams);
-        }
-
-        var chart1 = new LineChart(document.getElementById("pictureBox1"));
-        chart1.drawChart([chartData]);
-      }
+     
 
       // Simulate Form1_Load event
       window.onload = function () {
