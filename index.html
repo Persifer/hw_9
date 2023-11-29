@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Graph Handler</title>
+    <style>
+      div {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      section {
+       text-align: center;
+      
+      }
+      
+      
+      
+
+      h1 {
+        text-align: center;
+      }
+      canvas {
+        width: 1050px;
+        height: auto;
+        margin: 0 auto;
+      }
+      select {
+        margin: 0 auto;
+      }
+   
+      input {
+        margin-right: 30px;
+        height: 20px;
+      }
+      select {
+        margin: 40px auto;
+        width: 200px;
+        height: 50px;
+        font-size: 15px;
+        text-align: center;
+      }
+      #pictureBox1 {
+        margin: 0 auto;
+        padding-left: 50px;
+      }
+      button{
+        bottom: 20px;
+        height: 50px;
+        width: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>HOMEWORK 9</h1>
+    </header>
+    <section>
+      <label for="var1">Number of istances:</label>
+  <input type="text" id="var1" name="fname" value="30">
+  <label for="var2">Number of steps</label>
+  <input type="text" id="var2" name="lname" value="0.5">
+
+
+      <button onclick="GraphHandler()">activate</button>
+    </section>
+
+    <div>
+      
+      <select id="algorithmSelector" onchange="GraphHandler()">
+        <option value="ArithBrownian">Arith Brownian</option>
+        <option value="BlackKarasinski">BlackKarasinski</option>
+        <option value="ChenModel">ChenModel</option>
+        <option value="Cox–Ingersoll–Ross">Cox–Ingersoll–Ross</option>
+        <option value="GeometricBrownian">Geometric Brownian</option>
+        <option value="Heston">Heston</option>
+        <option value="Hullwhite">Hull white</option>
+        <option value="OrnsteinUhlenbeck">OrnsteinUhlenbeck</option>
+        <option value="vasicek">vasicek</option>
+      </select>
+    </div>
+    <canvas id="pictureBox1" width="1500" height="1500"> </canvas>
+
+    <script src="./algorithms/Arith_Brownian.js"></script>
+    <script src="./algorithms/Black–Karasinski.js"></script>
+    <script src="./algorithms/Chen_model.js"></script>
+    <script src="./algorithms/Cox–Ingersoll–Ross.js"></script>
+    <script src="./algorithms/Geometric_Brownian.js"></script>
+    <script src="./algorithms/Heston.js"></script>
+    <script src="./algorithms/Hull–White.js"></script>
+    <script src="./algorithms/Ornstein–Uhlenbeck_v2.js"></script>
+    <script src="./algorithms/Vasicek.js"></script>
+
+    <script src="./BetterLineChart.js"></script>
+
+    <script>
+      let var1 = document.getElementById("var1");
+      let var2 = document.getElementById("var2");
+
+      function GraphHandler() {
+        this.isDragging = false;
+        this.graphBitmap = null;
+        console.log(var1.value + "   " + var2.value);
+
+        const canvas = document.getElementById("pictureBox1");
+        let context = canvas.getContext("2d");
+        let selection = document.getElementById("algorithmSelector").value;
+        if (selection == "ArithBrownian") {
+          context.reset();
+          for (let i = 0; i < var1.value; i++) {
+            path = generateArithmeticBrownianMotion(
+              100,
+              var2.value,
+              1,
+              0.1,
+              0.2
+            );
+            createLineChart(context, path);
+          }
+        } else if (selection == "BlackKarasinski") {
+          context.reset();
+          for (let i = 0; i < var1.value; i++) {
+            path = generateBlackKarasinskiPath(
+              100,
+              var2.value,
+              0.7,
+              0.5,
+              0.2,
+              0.4
+            );
+            createLineChart(context, path);
+          }
+        } else if (selection == "ChenModel") {
+          context.reset();
+          for (let i = 0; i < var1.value; i++) {
+            path = generateChenModelPath(
+              100,
+              var2.value,
+              1,
+              1.0,
+              0.55,
+              3,
+              0.3
+            );
+            createLineChart(context, path);
+          }
+        } else if (selection == "Cox–Ingersoll–Ross") {
+          context.reset();
+          for (let i = 0; i < var1.value; i++) {
+            path = generateCIRPath(100, var2.value, 0.3, 2, 0.1, 0.2);
+            createLineChart(context, path);
+          }
+        } else if (selection == "GeometricBrownian") {
+          context.reset();
+          for (let i = 0; i < var1.value; i++) {
+            path = generateGeometricBrownianMotion(
+              var1.value,
+              var2.value,
+              0.1,
+              0.5,
+              0.4
+            );
+            createLineChart(context, path);
+          }
+        } else if (selection == "Heston") {
+          context.reset();
+          for (let i = 0; i < var1.value; i++) {
+            path = generateHestonVolatilityPath(
+              100,
+              var2.value,
+              2,
+              10,
+              2,
+              0.3,
+              5
+            );
+            createLineChart(context, path);
+          }
+        } else if (selection == "Hullwhite") {
+          context.reset();
+          for (let i = 0; i < var1.value; i++) {
+            path = generateHullWhitePath(
+              100,
+              var2.value,
+              0.1,
+              0.5,
+              0.2,
+              0.4
+            );
+            createLineChart(context, path);
+          }
+        } else if (selection == "OrnsteinUhlenbeck") {
+          context.reset();
+          for (let i = 0; i < var1.value; i++) {
+            path = generateOrnsteinUhlenbeck(
+              100,
+              var2.value,
+              0.57,
+              0.9,
+              0.6,
+              0.9
+            );
+            createLineChart(context, path);
+          }
+        } else if (selection == "vasicek") {
+          context.reset();
+          for (let i = 0; i < var1.value; i++) {
+            path = generateVasicekPath(
+              100,
+              var2.value,
+              0.57,
+              0.9,
+              0.1,
+              0.9
+            );
+            createLineChart(context, path);
+          }
+        }
+
+        // const numSteps = 100;         // Number of steps
+        // const stepSize = 0.1;         // Step size
+        // const initialRate = 0.03;     // Initial short rate
+        // const kappa = 0.1;            // Mean reversion speed
+        // const theta = 0.05;           // Long-term mean
+        // const sigma = 0.02;           // Volatility
+
+        // const path = generateVasicekPath(numSteps, stepSize, initialRate, kappa, theta, sigma);
+      }
+
+      // Simulate Form1_Load event
+      window.onload = function () {
+        GraphHandler();
+      };
+    </script>
+  </body>
+</html>
